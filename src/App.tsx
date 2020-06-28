@@ -1,25 +1,14 @@
 import './App.css';
-
 import React from 'react';
 import { SoundToggle } from './components/soundToggle';
+import { Container } from 'react-bootstrap';
 
 export const App = () => {
-  // const [value, setValue] = useState(() => {
-  //   const stickyValue =
-  //     window.localStorage.getItem(key);
-  //   return stickyValue !== null
-  //     ? JSON.parse(stickyValue)
-  //     : defaultValue;
-  // });
-
-  // useEffect(() => {
-  //   window.localStorage.setItem(name, JSON.stringify(value));
-  // }, [name, value]);
 
   return (
-    <div className="App">
+    <Container className="App" fluid>
       <SoundToggle></SoundToggle>
 
-    </div>
+    </Container>
   );
 };

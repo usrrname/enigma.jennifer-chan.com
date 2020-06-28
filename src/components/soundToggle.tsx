@@ -12,14 +12,14 @@ export const SoundToggle = () => {
   );
 
   return (
-    <>
+    <div className="sound-toggle">
       <label className="mr-2">Sound</label>
       <ToggleButton
         name="toggle-sound"
         active={isPlaying}
         checked={isChecked}
         type="checkbox"
-        size="lg"
+        size="sm"
         value={duration}
         onChange={() => setIsChecked(!isChecked)}
         onMouseDown={() => isPlaying}
@@ -27,6 +27,6 @@ export const SoundToggle = () => {
           isChecked ? pause() : play();
         }}
       />
-    </>
+    </div>
   );
 }

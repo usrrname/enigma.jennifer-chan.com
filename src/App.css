@@ -3,39 +3,33 @@ body {
 	width: 100%;
 	height: 100%;
 }
+.container-fluid {
+	padding: 0;
+}
+
 .App {
+	margin: 0;
+	padding: 0;
 	display: flex;
 	height: inherit;
 }
 
-.App-logo {
-	height: 40vmin;
+.sound-toggle {
+	background-color: rgba(255, 255, 255, 0.4);
+	z-index: 3;
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 0.25em;
+	pointer-events: all;
+}
+
+Wallpaper,
+YouTube {
 	pointer-events: none;
+	cursor: default;
 }
 
-.App-header {
-	background-color: #282c34;
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	font-size: calc(10px + 2vmin);
-	color: white;
-}
-
-.App-link {
-	color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-	from {
-		transform: rotate(0deg);
-	}
-	to {
-		transform: rotate(360deg);
-	}
-}
 Wallpaper.videoWrapper iframe,
 .videoWrapper > #widget2 {
 	z-index: -4 !important;
@@ -44,6 +38,4 @@ Wallpaper.videoWrapper iframe,
 	top: 0;
 	left: 0;
 	margin: 0;
-	width: 100% cover !important;
-	height: auto !important;
 }

@@ -10,7 +10,9 @@ export const App = () => {
     <div className="App">
       <Container fluid>
         <SoundToggle></SoundToggle>
-        <Wallpaper></Wallpaper>
+        <Wallpaper className="videoWrapper" videoId="TPChnsfBFuw"></Wallpaper>
+        {/* TODO: Figure out how to jump between one and the next video */}
+        {/* <Wallpaper className="videoWrapper" videoId="IZRruR6X220"></Wallpaper> */}
       </Container>
     </div>
 

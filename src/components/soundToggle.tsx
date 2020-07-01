@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { ToggleButton } from 'react-bootstrap';
-import useSound from 'use-sound';
+import { PlayFunction } from 'use-sound/dist/types';
 
-const sadeness = require('../assets/sadeness.mp3');
-export const SoundToggle = () => {
-  let [play, { duration, pause, isPlaying }] = useSound(sadeness);
+type ComponentProps = {
+  play: PlayFunction,
+  pause: (id?: string) => void;
+  isPlaying: boolean;
+  isChecked: boolean;
+  setIsChecked: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-  let [isChecked, setIsChecked] = useState(
-    false
-  );
-
+type Props = ComponentProps;
+export const SoundToggle = (props: Props) => {
   return (
     <div className="sound-toggle">
-      <label className="mr-2">Sound</label>
+      {props.isPlaying && <label className="ml-2 mr-2">Sound On</label>}
+      {!props.isPlaying && <label className="ml-2 mr-2">Sound Off</label>}
       <ToggleButton
         name="toggle-sound"
-        active={isPlaying}
-        checked={isChecked}
+        active={props.isPlaying}
+        checked={props.isChecked}
         type="checkbox"
         size="sm"
-        value={duration}
-        onChange={() => setIsChecked(!isChecked)}
-        onMouseDown={() => isPlaying}
-        onMouseUp={() => {
-          isChecked ? pause() : play();
-        }}
+        value=''
+        onClick={() => props.setIsChecked(!props.isChecked)}
+        onChange={() => props.isChecked ? props.pause() : props.play()}
       />
     </div>
   );

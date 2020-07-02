@@ -26,15 +26,16 @@ export const App = (props: Props) => {
   let [isChecked, setIsChecked] = useState(false);
 
   const { elapsedTime } = useElapsedTime(isChecked);
-  const soundCheckBox = document.querySelector('.toggle-sound');
+  // const soundCheckBox = document.querySelector('.toggle-sound');
 
-  useEffect(() => {
-    soundCheckBox?.addEventListener("click", () => {
-      if (document.querySelector('.active')) {
-        setIsChecked(prevIsPlaying => !prevIsPlaying);
-      }
-    });
-  })
+  // useEffect(() => {
+  //   soundCheckBox?.addEventListener("click", () => {
+  //     if (document.querySelector('.active')) {
+  //       console.log('setting is checked')
+  //       setIsChecked(prevIsPlaying => !prevIsPlaying);
+  //     }
+  //   });
+  // })
 
   let [play, { pause, isPlaying }] = useSound(soundtrack);
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import YouTube, { YouTubeProps, Options, PlayerVars } from 'react-youtube';
 import { ResponsiveEmbed } from 'react-bootstrap';
 import { videoIdList } from '../App';
@@ -10,25 +10,41 @@ type Props = YouTubeProps & {
   end?: number;
 }
 
-export const Wallpaper = (props: Props) => {
-  let { isChecked, isPlaying, start, end } = props;
-  const [player, setPlayer] = useState(null);
+interface State {
+  player: any;
+}
 
-  const onReady = (event: any) => {
-    setPlayer(event.target)
+export class Wallpaper extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      player: null,
+    }
   }
 
-  const onPlay = (event: any) => {
+  componentDidUpdate(prevProps: any) {
+    if (prevProps.isChecked === false && this.props.isChecked === true) {
+      this.state.player.playVideo();
+    }
+  }
+
+  onReady = (event: any) => {
+    this.setState({
+      player: event.target
+    })
+  }
+
+  onPlay = (event: any) => {
     event.target.playVideo();
   }
 
-  const onPause = (event: any) => {
-    if (!isChecked && !isPlaying) {
+  onPause = (event: any) => {
+    if (!this.props.isChecked && !this.props.isPlaying) {
       event.target.pauseVideo();
     }
   }
 
-  const opts = {
+  opts = {
     playerVars: {
       controls: 0,
       color: 'red',
@@ -39,25 +55,26 @@ export const Wallpaper = (props: Props) => {
       modestbranding: 1,
       showinfo: 0,
       // https://developers.google.com/youtube/player_parameters
-      autoplay: 1,
-      start: start,
-      end: end
+      autoplay: 0,
+      start: this.props.start,
+      end: this.props.end
     } as PlayerVars,
   } as Options;
 
-  return (
-    <ResponsiveEmbed aspectRatio='16by9'>
+  render() {
+    return (
+      <ResponsiveEmbed aspectRatio='16by9'>
       <YouTube
-        videoId={props.videoId}
-        className={props.className}
-        containerClassName={props.containerClassName}
-        opts={opts}
-        onReady={onReady}
-        onPlay={onPlay}
-        onPause={onPause}
-        onStateChange={props.onStateChange}
+        videoId={this.props.videoId}
+        className={this.props.className}
+        containerClassName={this.props.containerClassName}
+        opts={this.opts}
+        onReady={this.onReady}
+        onPlay={this.onPlay}
+        onPause={this.onPause}
+        onStateChange={this.props.onStateChange}
       />
     </ResponsiveEmbed>
-  );
-
+    )
+  }
 }

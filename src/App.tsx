@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { SoundToggle } from './components/soundToggle';
 import { Wallpaper } from './components/wallpaper';
 import { Container } from 'react-bootstrap';
@@ -26,18 +26,10 @@ export const App = (props: Props) => {
   let [isChecked, setIsChecked] = useState(false);
 
   const { elapsedTime } = useElapsedTime(isChecked);
-  // const soundCheckBox = document.querySelector('.toggle-sound');
-
-  // useEffect(() => {
-  //   soundCheckBox?.addEventListener("click", () => {
-  //     if (document.querySelector('.active')) {
-  //       console.log('setting is checked')
-  //       setIsChecked(prevIsPlaying => !prevIsPlaying);
-  //     }
-  //   });
-  // })
 
   let [play, { pause, isPlaying }] = useSound(soundtrack);
+
+  let [vplayer, setPlayer] = useState(false);
 
   const onStateChange = (event: any) => {
     setVideoId(videoId);

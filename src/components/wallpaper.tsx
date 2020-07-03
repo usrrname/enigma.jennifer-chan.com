@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import YouTube, { YouTubeProps, Options, PlayerVars } from 'react-youtube';
 import { ResponsiveEmbed } from 'react-bootstrap';
-import { videoIdList } from '../App';
 
 type Props = YouTubeProps & {
   isPlaying?: boolean;
@@ -14,17 +13,18 @@ interface State {
   player: any;
 }
 
-export class Wallpaper extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      player: null,
-    }
+export class Wallpaper extends Component<Props, State> {
+
+  static state: State = {
+    player: null,
   }
 
   componentDidUpdate(prevProps: any) {
-    if (prevProps.isChecked === false && this.props.isChecked === true) {
+    if (!prevProps.isChecked && this.props.isChecked) {
       this.state.player.playVideo();
+    }
+    if (prevProps.isChecked && !this.props.isChecked) {
+      this.state.player.pauseVideo();
     }
   }
 
@@ -64,17 +64,17 @@ export class Wallpaper extends React.Component<Props, State> {
   render() {
     return (
       <ResponsiveEmbed aspectRatio='16by9'>
-      <YouTube
-        videoId={this.props.videoId}
-        className={this.props.className}
-        containerClassName={this.props.containerClassName}
-        opts={this.opts}
-        onReady={this.onReady}
-        onPlay={this.onPlay}
-        onPause={this.onPause}
-        onStateChange={this.props.onStateChange}
-      />
-    </ResponsiveEmbed>
+        <YouTube
+          videoId={this.props.videoId}
+          className={this.props.className}
+          containerClassName={this.props.containerClassName}
+          opts={this.opts}
+          onReady={this.onReady}
+          onPlay={this.onPlay}
+          onPause={this.onPause}
+          onStateChange={this.props.onStateChange}
+        />
+      </ResponsiveEmbed>
     )
   }
 }

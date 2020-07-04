@@ -49,12 +49,12 @@ export class Wallpaper extends Component<Props, State> {
       controls: 0,
       color: 'red',
       playsinline: 1,
+      enablejsapi: 1,
       mute: 1,
       fs: 0,
       disablekb: 0,
       modestbranding: 1,
       showinfo: 0,
-      // https://developers.google.com/youtube/player_parameters
       autoplay: 0,
       start: this.props.start,
       end: this.props.end

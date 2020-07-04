@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { SoundToggle } from './components/soundToggle';
 import { Wallpaper } from './components/wallpaper';
 import { Container } from 'react-bootstrap';
@@ -7,7 +7,6 @@ import { useElapsedTime } from 'use-elapsed-time';
 import useSound from 'use-sound';
 import { YouTubeProps } from 'react-youtube';
 import { Video } from './types';
-import { usePrevious } from './hooks/usePrevRef';
 
 const soundtrack = require('./assets/sadeness.mp3');
 const videos = [
@@ -28,15 +27,28 @@ const videos = [
     elapsedTime: 51000
   },
   {
+    id: '_OT4CNxHEGM',
+    name: 'How does a dog drink',
+    start: 74,
+    end: 84,
+    order: 3,
+    elapsedTime: 67220
+  },
+  {
     id: 'WIo9ROTi7a4',
     name: 'the bucket',
     start: 64,
-    end: 32,
-    elapsedTime: 69000
+    end: 84,
+    order: 4,
+    elapsedTime: 74500
   },
   {
-    id: '_OT4CNxHEGM',
-    name: 'How does a dog drink',
+    id: 'jIl2DSXUffw',
+    name: '(Original) Suicidal Snake eating itself',
+    start: 17,
+    end: 23,
+    order: 5,
+    elapsedTime: 84030
   },
   {
     id: 'XJ8i896xM',
@@ -60,16 +72,11 @@ const videos = [
   },
   {
     id: 'BhAX0gi4CbM',
-    name: 'Drinking Water in Slow Motion',
-
+    name: 'Drinking Water in Slow Motion'
   },
   {
     id: '1xTG5pHSjYQ',
     name: 'Polar Vortex 2019, Canada, Ontario (-38C)'
-  },
-  {
-    id: 'jIl2DSXUffw',
-    name: '(Original) Suicidal Snake eating itself'
   },
   {
     id: 'OR7Ug5y-va8',
@@ -94,40 +101,26 @@ const videos = [
 type Props = YouTubeProps;
 
 export const App = (props: Props) => {
-  // let video: any;
-  // let prevVideo: any;
+  const video = videos.find((v: Video) => { return v.id === 'TPChnsfBFuw' && v.order === 0 });
 
-  // dummy initial video
-  const video = {
-    id: 'TPChnsfBFuw',
-    name: 'Drone footage of the baby whale beached at Amanzimtoti\'s Pipeline beach',
-    start: 4,
-    end: 51,
-    order: 0,
-    elapsedTime: 0
-  }
-
-  let [isChecked, setIsChecked] = useState(false);
+  let [isChecked, setIsChecked] = useState<boolean>(false);
   const { elapsedTime } = useElapsedTime(isChecked);
   let [play, { pause, isPlaying }] = useSound(soundtrack);
 
-
-  const [videoId, setVideoId] = useState(video.id);
-  // prevVideo = usePrevious(video)
+  let [videoId, setVideoId] = useState(video?.id);
 
   const onStateChange = (event: any) => {
-    // if (!video && elapsedTime === 0) {
-    //   video = videos.find((v: Video) => { return v.order === 0 && v.elapsedTime === 0 });
-    // }
-    // if (elapsedTime > 0) {
-    //   video = videos.find((v: Video) => {
-    //     return v.order > prevVideo.order
-    //       && v.id !== prevVideo.id
-    //       && v.elapsedTime >= elapsedTime
-    //   });
-    // }
     setVideoId(videoId);
   }
+
+  const prevVideo = useRef(video).current;
+ 
+  useEffect(() => {
+    if (prevVideo && (elapsedTime > prevVideo?.elapsedTime)) {
+      setVideoId(videoId);
+    }
+  }, [elapsedTime, prevVideo, videoId])
+
 
   return (
     <div className="App">
@@ -146,8 +139,8 @@ export const App = (props: Props) => {
           className="videoWrapper"
           isChecked={isChecked}
           isPlaying={isPlaying}
-          start={video.start}
-          end={video.end}
+          start={video?.start}
+          end={video?.end}
           onStateChange={onStateChange}
         ></Wallpaper>
       </Container>

@@ -6,6 +6,5 @@ export function usePrevious(value: any) {
   useEffect(() => {
     ref.current = value;
   });
-  console.log(ref.current);
   return ref.current;
 }

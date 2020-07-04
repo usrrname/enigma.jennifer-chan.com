@@ -19,7 +19,7 @@ export class Wallpaper extends Component<Props, State> {
     player: null,
   }
 
-  componentDidUpdate(prevProps: any) {
+  componentDidUpdate(prevProps: any, prevState: any) {
     if (!prevProps.isChecked && this.props.isChecked) {
       this.state.player.playVideo();
     }
@@ -44,6 +44,11 @@ export class Wallpaper extends Component<Props, State> {
     }
   }
 
+  onStateChange = (event: any) => {
+    this.setState({
+      player: event?.currentTarget
+    })
+  }
   opts = {
     playerVars: {
       controls: 0,

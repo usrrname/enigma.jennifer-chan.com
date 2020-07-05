@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect, useRef, KeyboardEvent } from 'react';
+import React, { useState, useRef, KeyboardEvent, useEffect } from 'react';
 import { SoundToggle } from './components/soundToggle';
 import { Wallpaper } from './components/wallpaper';
 import { Container } from 'react-bootstrap';
@@ -16,7 +16,8 @@ const videos = [
     start: 4,
     end: 51,
     order: 0,
-    elapsedTime: 0
+    // elapsedTime: 0,
+    autoplay: 0,
   },
   {
     id: 'IZRruR6X220',
@@ -24,7 +25,8 @@ const videos = [
     start: 78,
     end: 94,
     order: 1,
-    elapsedTime: 51
+    // elapsedTime: 51,
+    autoplay: 1,
   },
   {
     id: '_OT4CNxHEGM',
@@ -32,7 +34,8 @@ const videos = [
     start: 74,
     end: 84,
     order: 3,
-    elapsedTime: 67.220
+    // elapsedTime: 67.22,
+    autoplay: 1
   },
   {
     id: 'WIo9ROTi7a4',
@@ -40,28 +43,31 @@ const videos = [
     start: 64,
     end: 84,
     order: 4,
-    elapsedTime: 74.5
+    // elapsedTime: 74.50,
+    autoplay: 1,
   },
   {
     id: 'jIl2DSXUffw',
     name: '(Original) Suicidal Snake eating itself',
     start: 17,
     end: 23,
-    order: 5,
-    elapsedTime: 84.30
-  },
-  {
-    id: 'XJ8i896xM',
-    name: 'UK minister criticised over posture during Brexit debate',
+    order: 5
   },
   {
     id: '5mTiFRNMRO0',
     name: '沙煲即食麵(要過熱河)將炸麵油除去。',
+    start: 24,
+    end: 42
   },
   {
     id: 'uamdraznYsU',
     name: '餐蛋麵 Hong Kong Style Luncheon Meat & Egg Noodle',
-    elapsedTime: 94
+    start: 0,
+    end: 7
+  },
+  {
+    id: 'XJ8i896xM',
+    name: 'UK minister criticised over posture during Brexit debate',
   },
   {
     id: 'XtPic_hf-Jo',
@@ -103,19 +109,36 @@ const videos = [
 type Props = YouTubeProps;
 
 export const App = (props: Props) => {
-  const video = videos.find((v: Video) => { return v.id === 'TPChnsfBFuw' && v.order === 0 });
+  const [index, setIndex] = useState(0);
+  const prevIndex = useRef(index).current;
+
+  let video = videos.find((v: Video) => { return v.order === index });
 
   let [isChecked, setIsChecked] = useState<boolean>(false);
   const { elapsedTime } = useElapsedTime(isChecked);
+
   let [play, { pause, isPlaying }] = useSound(soundtrack);
 
   let [videoId, setVideoId] = useState(video?.id);
-  const [player, setPlayer] = useState(null);
+
   const prevVideo = useRef(video).current;
+
+  let playerTarget: any;
+
+  useEffect(() => {
+    const onUpdate = (event?: any) => {
+      setIndex(index);
+    };
+    onUpdate()
+  })
 
   const onStateChange = (event: any, videoId?: string) => {
     setVideoId(videoId);
-    setPlayer(event.target);
+  };
+
+  const onEnd = (event: any) => {
+    console.log('ended');
+    // event.target.data 
   }
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -123,27 +146,25 @@ export const App = (props: Props) => {
       case 'delete':
       case 'ArrowLeft':
         if (prevVideo) {
-          const nextVideo = videos.find(v => { return v.id === prevVideo?.id && (v.order === prevVideo?.order && v.order >= 0) })
-          onStateChange(event, nextVideo?.id);
+          const lastVideo = videos.find(v => {
+            return v.id === prevVideo?.id && (v.order === prevVideo?.order && v.order === prevIndex)
+          })
+          setIndex(index - 1)
+          onStateChange(event, lastVideo?.id);
+        } else {
+          return;
         }
         break;
       case 'Enter':
       case 'ArrowRight':
         if (prevVideo) {
-          const nextVideo = videos.find(v => { return v.id !== prevVideo?.id && v.order === prevVideo?.order + 1 })
+          const nextVideo = videos.find(v => { return v.id !== prevVideo?.id && v.order === (prevIndex + 1 || index + 1) })
+          setIndex(index + 1)
           onStateChange(event, nextVideo?.id);
         }
         break;
     }
   }
-
-  useEffect(() => {
-    if (prevVideo && (elapsedTime > prevVideo?.elapsedTime)) {
-      setVideoId(videoId);
-      setPlayer(player)
-    }
-  }, [elapsedTime, prevVideo, videoId, player])
-
 
   return (
     <div className="App" onKeyDown={handleKeyDown} tabIndex={0}>
@@ -163,6 +184,9 @@ export const App = (props: Props) => {
           isPlaying={isPlaying}
           start={video?.start}
           end={video?.end}
+          autoplay={video?.autoplay}
+          playerTarget={playerTarget}
+          onEnd={onEnd}
           onStateChange={onStateChange}
         />
       </Container>

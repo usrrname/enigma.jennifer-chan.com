@@ -4,5 +4,6 @@ export type Video = {
   start?: number;
   end?: number;
   order: number;
-  elapsedTime: number;
+  elapsedTime?: number;
+  autoplay?: number;
 }

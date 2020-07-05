@@ -57,7 +57,7 @@ export class Wallpaper extends Component<Props, State> {
       enablejsapi: 1,
       mute: 1,
       fs: 0,
-      disablekb: 0,
+      disablekb: 1,
       modestbranding: 1,
       showinfo: 0,
       autoplay: 0,

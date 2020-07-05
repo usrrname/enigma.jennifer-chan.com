@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, KeyboardEvent } from 'react';
 import { SoundToggle } from './components/soundToggle';
 import { Wallpaper } from './components/wallpaper';
 import { Container } from 'react-bootstrap';
@@ -24,7 +24,7 @@ const videos = [
     start: 78,
     end: 94,
     order: 1,
-    elapsedTime: 51000
+    elapsedTime: 51
   },
   {
     id: '_OT4CNxHEGM',
@@ -32,7 +32,7 @@ const videos = [
     start: 74,
     end: 84,
     order: 3,
-    elapsedTime: 67220
+    elapsedTime: 67.220
   },
   {
     id: 'WIo9ROTi7a4',
@@ -40,7 +40,7 @@ const videos = [
     start: 64,
     end: 84,
     order: 4,
-    elapsedTime: 74500
+    elapsedTime: 74.5
   },
   {
     id: 'jIl2DSXUffw',
@@ -48,7 +48,7 @@ const videos = [
     start: 17,
     end: 23,
     order: 5,
-    elapsedTime: 84030
+    elapsedTime: 84.30
   },
   {
     id: 'XJ8i896xM',
@@ -61,6 +61,7 @@ const videos = [
   {
     id: 'uamdraznYsU',
     name: '餐蛋麵 Hong Kong Style Luncheon Meat & Egg Noodle',
+    elapsedTime: 94
   },
   {
     id: 'XtPic_hf-Jo',
@@ -98,6 +99,7 @@ const videos = [
   }
 ] as Video[];
 
+
 type Props = YouTubeProps;
 
 export const App = (props: Props) => {
@@ -108,22 +110,43 @@ export const App = (props: Props) => {
   let [play, { pause, isPlaying }] = useSound(soundtrack);
 
   let [videoId, setVideoId] = useState(video?.id);
+  const [player, setPlayer] = useState(null);
+  const prevVideo = useRef(video).current;
 
-  const onStateChange = (event: any) => {
+  const onStateChange = (event: any, videoId?: string) => {
     setVideoId(videoId);
+    setPlayer(event.target);
   }
 
-  const prevVideo = useRef(video).current;
- 
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    switch (event.key) {
+      case 'delete':
+      case 'ArrowLeft':
+        if (prevVideo) {
+          const nextVideo = videos.find(v => { return v.id === prevVideo?.id && (v.order === prevVideo?.order && v.order >= 0) })
+          onStateChange(event, nextVideo?.id);
+        }
+        break;
+      case 'Enter':
+      case 'ArrowRight':
+        if (prevVideo) {
+          const nextVideo = videos.find(v => { return v.id !== prevVideo?.id && v.order === prevVideo?.order + 1 })
+          onStateChange(event, nextVideo?.id);
+        }
+        break;
+    }
+  }
+
   useEffect(() => {
     if (prevVideo && (elapsedTime > prevVideo?.elapsedTime)) {
       setVideoId(videoId);
+      setPlayer(player)
     }
-  }, [elapsedTime, prevVideo, videoId])
+  }, [elapsedTime, prevVideo, videoId, player])
 
 
   return (
-    <div className="App">
+    <div className="App" onKeyDown={handleKeyDown} tabIndex={0}>
       <Container fluid>
         <SoundToggle
           play={play}
@@ -133,7 +156,6 @@ export const App = (props: Props) => {
           pause={pause}
         />
         <span className="elapsed-time">{elapsedTime}</span>
-
         <Wallpaper
           videoId={videoId}
           className="videoWrapper"
@@ -142,7 +164,7 @@ export const App = (props: Props) => {
           start={video?.start}
           end={video?.end}
           onStateChange={onStateChange}
-        ></Wallpaper>
+        />
       </Container>
     </div >
   );

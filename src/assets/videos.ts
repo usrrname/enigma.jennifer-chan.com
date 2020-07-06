@@ -1,0 +1,174 @@
+import { Video } from "../types";
+
+export const videos = [
+  {
+    id: 'TPChnsfBFuw',
+    name: 'Drone footage of the baby whale beached at Amanzimtoti\'s Pipeline beach',
+    start: 4,
+    end: 51,
+    autoplay: 1,
+  },
+  {
+    id: 'IZRruR6X220',
+    name: 'Dead whale at beach in Everett at Harborview Park',
+    start: 78,
+    end: 94,
+    autoplay: 1,
+  },
+  {
+    id: '_OT4CNxHEGM',
+    name: 'How does a dog drink',
+    start: 74,
+    end: 83,
+    autoplay: 1
+  },
+  {
+    id: 'WIo9ROTi7a4',
+    name: 'the bucket',
+    start: 64,
+    end: 85,
+    autoplay: 1,
+  },
+  {
+    id: 'jIl2DSXUffw',
+    name: '(Original) Suicidal Snake eating itself',
+    start: 17,
+    end: 23,
+    autoplay: 1
+  },
+  {
+    id: '5mTiFRNMRO0',
+    name: '沙煲即食麵(要過熱河)將炸麵油除去。',
+    start: 24,
+    end: 28,
+    autoplay: 1
+  },
+  {
+    id: '5mTiFRNMRO0',
+    name: '沙煲即食麵(要過熱河)將炸麵油除去。',
+    start: 28,
+    end: 40,
+    autoplay: 1
+  },
+  {
+    id: 'uamdraznYsU',
+    name: '餐蛋麵 Hong Kong Style Luncheon Meat & Egg Noodle',
+    start: 0,
+    end: 7,
+    autoplay: 1
+  },
+  {
+    id: '5mTiFRNMRO0',
+    name: '沙煲即食麵(要過熱河)將炸麵油除去。',
+    start: 64,
+    end: 71,
+    autoplay: 1
+  },
+  {
+    id: 'uamdraznYsU',
+    name: '餐蛋麵 Hong Kong Style Luncheon Meat & Egg Noodle',
+    start: 818,
+    end: 822,
+    autoplay: 1
+  },
+  {
+    id: 'SNDGCiY0z5I',
+    name: 'Plane washes ashore after crashing into Atlantic Ocean',
+    start: 0,
+    end: 8,
+    autoplay: 1
+  },
+  {
+    id: 'XJ8i896xM',
+    name: 'UK minister criticised over posture during Brexit debate',
+    start: 0,
+    end: 4,
+    autoplay: 1
+  },
+  {
+    id: 'HLVGHqc4uAA',
+    name: 'MPs spark chaos in Parliament in prorogation protest',
+    start: 389,
+    end: 1047,
+    autoplay: 1
+  },
+  {
+    id: 'L9TnPiCVaLI',
+    name: 'Tea Making in slow Motion - milk mixing beautiful video',
+    start: 5,
+    end: 14,
+    autoplay: 1
+  },
+  {
+    id: 'ilEolWazM6o',
+    name: 'Angela Merkel shaking for third time in as many weeks',
+    start: 71,
+    end: 83,
+    autoplay: 1
+  },
+  {
+    id: 'OR7Ug5y-va8',
+    name: 'Angela Merkel seen shaking for a third time - BBC News',
+    start: 51,
+    end: 54,
+    autoplay: 1
+  },
+  {
+    id: 'BhAX0gi4CbM',
+    name: 'Drinking Water in Slow Motion',
+    start: 122,
+    end: 126,
+    order: 16,
+    autoplay: 1
+  },
+  {
+    id: '2rCVARgnyjg',
+    name: 'Never scoop again! PetSafe® ScoopFree® Self-Cleaning Litter Box',
+    start: 191,
+    end: 490,
+    order: 17,
+    autoplay: 1,
+  },
+  {
+    id: '1xTG5pHSjYQ',
+    name: 'Polar Vortex 2019, Canada, Ontario (-38C)',
+    start: 1409,
+    end: 1580,
+    autoplay: 1
+  },
+  {
+    id: 'A8q-Zx8gIbg',
+    name: 'Ukrainian politician thrown into a rubbish bin by angry mob - BBC News',
+    start: 449,
+    end: 901,
+    autoplay: 1
+  },
+  {
+    id: 'A8q-Zx8gIbg',
+    name: 'Ukrainian politician thrown into a rubbish bin by angry mob - BBC News',
+    start: 908,
+    end: 1642,
+    autoplay: 1
+  },
+  {
+    id: 'se_Q_KRGTNg',
+    name: 'Bubbling Mud Pot in Yellowstone - With Sound - Stock Video',
+    start: 0,
+    end: 6,
+    autoplay: 1
+  },
+  {
+    id: 'aKmLxoMScb4',
+    name: 'Brexit - British MP seizes mace, tossed from parliament',
+    autoplay: 1,
+    start: 2,
+    end: 7,
+  },
+  {
+    id: 'XtPic_hf-Jo',
+    name: 'The Rope [Slackline over Monster Waves in Nazaré] [Drone]',
+    start: 860,
+    end: 2820,
+    autoplay: 1
+  },
+] as Video[];

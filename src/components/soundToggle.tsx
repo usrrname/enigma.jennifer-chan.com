@@ -13,10 +13,15 @@ type ComponentProps = {
 
 type Props = ComponentProps;
 export const SoundToggle = (props: Props) => {
+
+  const onChange = () => {
+    props.isChecked ? props.pause() : props.play();
+  }
+
   return (
     <div className="sound-toggle">
-      {props.isPlaying && <label className="ml-2 mr-2">Sound On</label>}
-      {!props.isPlaying && <label className="ml-2 mr-2">Sound Off</label>}
+      {props.isChecked && props.isPlaying && <label className="ml-2 mr-2">Sound On</label>}
+      {!props.isChecked && !props.isPlaying && <label className="ml-2 mr-2">Sound Off</label>}
       <ToggleButton
         name="toggle-sound"
         active={props.isPlaying}
@@ -25,7 +30,7 @@ export const SoundToggle = (props: Props) => {
         size="sm"
         value=''
         onClick={() => props.setIsChecked(!props.isChecked)}
-        onChange={() => props.isChecked ? props.pause() : props.play()}
+        onChange={onChange}
       />
     </div>
   );

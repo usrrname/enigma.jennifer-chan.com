@@ -118,7 +118,6 @@ export const videos = [
     name: 'Drinking Water in Slow Motion',
     start: 122,
     end: 126,
-    order: 16,
     autoplay: 1
   },
   {
@@ -126,7 +125,6 @@ export const videos = [
     name: 'Never scoop again! PetSafe® ScoopFree® Self-Cleaning Litter Box',
     start: 191,
     end: 490,
-    order: 17,
     autoplay: 1,
   },
   {

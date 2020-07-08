@@ -18,14 +18,14 @@
 		"react-scripts": "3.4.1",
 		"react-transition-group": "^4.4.1",
 		"react-youtube": "^7.11.2",
-		"use-elapsed-time": "^2.1.5",
 		"use-sound": "^1.0.2"
 	},
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
-		"eject": "react-scripts eject"
+		"eject": "react-scripts eject",
+		"deploy": "gh-pages -d build"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
@@ -46,5 +46,6 @@
 		"ts-loader": "^7.0.5",
 		"typescript": "^3.9.5"
 	},
-	"proxy": "http://localhost:3000"
+	"proxy": "http://localhost:3000",
+	"homepage": "http://usrrname.github.io/video-background"
 }

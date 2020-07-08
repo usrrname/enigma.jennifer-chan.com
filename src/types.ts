@@ -3,7 +3,5 @@ export type Video = {
   name: string;
   start?: number;
   end?: number;
-  order: number;
-  elapsedTime?: number;
   autoplay?: number;
 }

@@ -6,7 +6,7 @@ export const videos = [
     name: 'Drone footage of the baby whale beached at Amanzimtoti\'s Pipeline beach',
     start: 4,
     end: 51,
-    autoplay: 1,
+    autoplay: 0,
   },
   {
     id: 'IZRruR6X220',

@@ -5,3 +5,7 @@ export type Video = {
   end?: number;
   autoplay?: number;
 }
+export type IndexState = {
+  prev: number;
+  current: number;
+}

@@ -12,6 +12,7 @@ type ComponentProps = {
 }
 
 type Props = ComponentProps;
+
 export const SoundToggle = (props: Props) => {
 
   const onChange = () => {

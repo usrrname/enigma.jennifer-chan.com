@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import YouTube, { YouTubeProps, Options, PlayerVars } from 'react-youtube';
 import { ResponsiveEmbed } from 'react-bootstrap';
-import { Video } from '../types';
+import { Video, IndexState } from '../types';
 import { getVideo } from '../util';
 import { videos } from '../assets/videos';
 
 type Props = YouTubeProps & {
   isPlaying: boolean;
   isChecked: boolean;
-  index: number;
+  index: IndexState;
 }
 
 interface State {
@@ -37,12 +37,15 @@ export class Wallpaper extends Component<Props, State> {
   state: State = {
     player: null,
   }
+  componentDidMount() {
+    this.onReady()
+  }
 
   componentDidUpdate(nextProps: Props) {
     if (nextProps.index !== this.props.index) {
-      this.updateOpts(nextProps);
+      this.updateOpts(nextProps, this.props);
     }
-    if (!nextProps.isChecked && this.props.isChecked) {
+    if ((!nextProps.isChecked && this.props.isChecked) || this.video?.autoplay === 1) {
       this.state.player.playVideo();
     }
     if (nextProps.isChecked && !this.props.isChecked) {
@@ -50,36 +53,56 @@ export class Wallpaper extends Component<Props, State> {
     }
   }
 
-  updateOpts(nextProps: Props) {
-    if (nextProps.index !== this.props.index) {
-      this.video = getVideo(nextProps.index, videos)
-      if (this.video) {
-        this.opts = {
-          playerVars: {
-            controls: 0,
-            color: 'red',
-            playsinline: 1,
-            enablejsapi: 1,
-            mute: 1,
-            fs: 0,
-            disablekb: 1,
-            modestbranding: 1,
-            showinfo: 0,
-            autoplay: this.video?.autoplay,
-            start: this.video?.start,
-            end: this.video?.end
-          } as PlayerVars,
-        } as Options;
+  updateOpts(props: Props, nextProps?: Props,) {
+    if (props && !nextProps) {
+      this.opts = {
+        playerVars: {
+          controls: 0,
+          color: 'red',
+          playsinline: 1,
+          enablejsapi: 1,
+          mute: 1,
+          fs: 0,
+          disablekb: 1,
+          modestbranding: 1,
+          showinfo: 0,
+          autoplay: this.video?.autoplay,
+          start: this.video?.start,
+          end: this.video?.end
+        } as PlayerVars,
+      } as Options;
+    } else {
+      if (nextProps && (nextProps.index !== props.index)) {
+        this.video = getVideo(nextProps.index.current, videos)
+        if (this.video) {
+          this.opts = {
+            playerVars: {
+              controls: 0,
+              color: 'red',
+              playsinline: 1,
+              enablejsapi: 1,
+              mute: 1,
+              fs: 0,
+              disablekb: 1,
+              modestbranding: 1,
+              showinfo: 0,
+              autoplay: this.video?.autoplay,
+              start: this.video?.start,
+              end: this.video?.end
+            } as PlayerVars,
+          } as Options;
+        }
       }
     }
   }
 
-  onReady = (event: any) => {
-    this.video = getVideo(this.props.index, videos);
+  onReady = (event?: any) => {
+    this.video = getVideo(this.props.index.current, videos);
+    this.updateOpts(this.props);
+
     this.setState({
       player: event?.target
     })
-    this.onPlay(event);
   }
 
   onPlay = (event: any) => {
@@ -96,7 +119,7 @@ export class Wallpaper extends Component<Props, State> {
 
   render() {
     return (
-      <ResponsiveEmbed aspectRatio='16by9'>
+      <ResponsiveEmbed aspectRatio='16by9' className="mb-0">
         <YouTube
           videoId={this.video?.id}
           className={this.props.className}

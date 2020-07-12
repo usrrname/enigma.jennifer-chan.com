@@ -37,8 +37,9 @@ export class Wallpaper extends Component<Props, State> {
   state: State = {
     player: null,
   }
+
   componentDidMount() {
-    this.onReady()
+    this.onReady();
   }
 
   componentDidUpdate(nextProps: Props) {
@@ -106,7 +107,7 @@ export class Wallpaper extends Component<Props, State> {
   }
 
   onPlay = (event: any) => {
-    if ((this.props.isChecked && this.props.isPlaying) || this.video?.autoplay === 1) {
+    if (this.props.isChecked && this.props.isPlaying && this.video?.autoplay === 1) {
       event.target.playVideo();
     }
   }
@@ -122,7 +123,6 @@ export class Wallpaper extends Component<Props, State> {
       <ResponsiveEmbed aspectRatio='16by9' className="mb-0">
         <YouTube
           videoId={this.video?.id}
-          className={this.props.className}
           opts={this.opts}
           onReady={this.onReady}
           onEnd={this.props.onEnd}

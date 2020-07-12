@@ -4,9 +4,16 @@ export const videos = [
   {
     id: 'TPChnsfBFuw',
     name: 'Drone footage of the baby whale beached at Amanzimtoti\'s Pipeline beach',
-    start: 4,
-    end: 51,
+    start: 6,
+    end: 12,
     autoplay: 0,
+  },
+  {
+    id: 'TPChnsfBFuw',
+    name: 'Drone footage of the baby whale beached at Amanzimtoti\'s Pipeline beach',
+    start: 30,
+    end: 40,
+    autoplay: 1,
   },
   {
     id: 'IZRruR6X220',
@@ -82,7 +89,7 @@ export const videos = [
     id: 'XJ8i896xM',
     name: 'UK minister criticised over posture during Brexit debate',
     start: 0,
-    end: 4,
+    end: 5,
     autoplay: 1
   },
   {
@@ -123,29 +130,22 @@ export const videos = [
   {
     id: '2rCVARgnyjg',
     name: 'Never scoop again! PetSafe® ScoopFree® Self-Cleaning Litter Box',
-    start: 191,
-    end: 490,
+    start: 3,
+    end: 8,
     autoplay: 1,
   },
   {
     id: '1xTG5pHSjYQ',
     name: 'Polar Vortex 2019, Canada, Ontario (-38C)',
-    start: 1409,
-    end: 1580,
+    start: 24,
+    end: 48,
     autoplay: 1
   },
   {
     id: 'A8q-Zx8gIbg',
     name: 'Ukrainian politician thrown into a rubbish bin by angry mob - BBC News',
-    start: 449,
-    end: 901,
-    autoplay: 1
-  },
-  {
-    id: 'A8q-Zx8gIbg',
-    name: 'Ukrainian politician thrown into a rubbish bin by angry mob - BBC News',
-    start: 908,
-    end: 1642,
+    start: 9,
+    end: 28,
     autoplay: 1
   },
   {
@@ -158,15 +158,15 @@ export const videos = [
   {
     id: 'aKmLxoMScb4',
     name: 'Brexit - British MP seizes mace, tossed from parliament',
-    autoplay: 1,
-    start: 2,
-    end: 7,
+    start: 4,
+    end: 19,
+    autoplay: 1
   },
   {
     id: 'XtPic_hf-Jo',
     name: 'The Rope [Slackline over Monster Waves in Nazaré] [Drone]',
-    start: 860,
-    end: 2820,
+    start: 17,
+    end: 100,
     autoplay: 1
   },
 ] as Video[];

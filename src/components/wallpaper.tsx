@@ -16,6 +16,13 @@ interface State {
 }
 
 export class Wallpaper extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      player: null,
+    } as State
+  }
+
   video: Video | undefined;
   opts = {
     playerVars: {
@@ -23,6 +30,7 @@ export class Wallpaper extends Component<Props, State> {
       color: 'red',
       playsinline: 1,
       enablejsapi: 1,
+      iv_load_policy: 3,
       mute: 1,
       fs: 0,
       disablekb: 1,
@@ -34,19 +42,20 @@ export class Wallpaper extends Component<Props, State> {
     }
   } as Options;
 
-  state: State = {
-    player: null,
-  }
-
   componentDidMount() {
     this.onReady();
+  }
+
+  componentDidCatch() {
+    this.onError();
   }
 
   componentDidUpdate(nextProps: Props) {
     if (nextProps.index !== this.props.index) {
       this.updateOpts(nextProps, this.props);
     }
-    if ((!nextProps.isChecked && this.props.isChecked) || this.video?.autoplay === 1) {
+    if ((!nextProps.isChecked && this.props.isChecked)
+      && (!nextProps.isPlaying && this.props.isPlaying) && this.video?.autoplay === 1) {
       this.state.player.playVideo();
     }
     if (nextProps.isChecked && !this.props.isChecked) {
@@ -62,6 +71,7 @@ export class Wallpaper extends Component<Props, State> {
           color: 'red',
           playsinline: 1,
           enablejsapi: 1,
+          iv_load_policy: 3,
           mute: 1,
           fs: 0,
           disablekb: 1,
@@ -75,13 +85,14 @@ export class Wallpaper extends Component<Props, State> {
     } else {
       if (nextProps && (nextProps.index !== props.index)) {
         this.video = getVideo(nextProps.index.current, videos)
-        if (this.video) {
+        if (this.video && this.opts) {
           this.opts = {
             playerVars: {
               controls: 0,
               color: 'red',
               playsinline: 1,
               enablejsapi: 1,
+              iv_load_policy: 3,
               mute: 1,
               fs: 0,
               disablekb: 1,
@@ -106,26 +117,31 @@ export class Wallpaper extends Component<Props, State> {
     })
   }
 
+  onError = (event?: any) => {
+    console.warn(event.data)
+  }
+
   onPlay = (event: any) => {
-    if (this.props.isChecked && this.props.isPlaying && this.video?.autoplay === 1) {
+    if (this.props.isChecked && this.props.isPlaying) {
       event.target.playVideo();
     }
   }
 
   onPause = (event: any) => {
-    if (!this.props.isChecked && !this.props.isPlaying) {
+    if (!this.props.isChecked || !this.props.isPlaying) {
       event.target.pauseVideo();
     }
   }
 
   render() {
     return (
-      <ResponsiveEmbed aspectRatio='16by9' className="mb-0">
+      <ResponsiveEmbed aspectRatio='16by9' bsPrefix="embed-responsive">
         <YouTube
           videoId={this.video?.id}
           opts={this.opts}
           onReady={this.onReady}
           onEnd={this.props.onEnd}
+          onError={this.onError}
           onPlay={this.onPlay}
           onPause={this.onPause}
           onStateChange={this.props.onStateChange}

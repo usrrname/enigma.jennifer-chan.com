@@ -6,7 +6,7 @@ export const videos = [
     name: 'Drone footage of the baby whale beached at Amanzimtoti\'s Pipeline beach',
     start: 6,
     end: 12,
-    autoplay: 0,
+    autoplay: 1,
   },
   {
     id: 'TPChnsfBFuw',
@@ -123,8 +123,8 @@ export const videos = [
   {
     id: 'BhAX0gi4CbM',
     name: 'Drinking Water in Slow Motion',
-    start: 122,
-    end: 126,
+    start: 10,
+    end: 38,
     autoplay: 1
   },
   {

@@ -1,30 +1,38 @@
 import './App.css';
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useRef } from 'react';
 import React, { useState, useEffect } from 'react';
-import { SoundToggle } from './components/soundToggle';
 import { Container } from 'react-bootstrap';
 import useSound from 'use-sound';
 import { videos } from './assets/videos';
 import { IndexState } from './types';
 import { Loading } from './components/loading';
+
 const soundtrack = require('./assets/sadeness.mp3');
+
 const Wallpaper = lazy(() =>
   import('./components/wallpaper')
     .then(({ Wallpaper }) =>
       ({ default: Wallpaper })
     ),
 )
+const SoundToggle = lazy(() =>
+  import('./components/soundToggle')
+    .then(({ SoundToggle }) =>
+      ({ default: SoundToggle })
+    ),
+)
 
 export const App = () => {
 
-  let [isChecked, setIsChecked] = useState<boolean>(false);
-
-  let [play, { pause, isPlaying }] = useSound(soundtrack);
+  // toggle sound on
+  let [isChecked, setIsChecked] = useState<boolean>(true);
 
   const [index, setIndex] = useState<IndexState>({
     prev: 0,
     current: 0
   } as IndexState);
+
+  let [play, { pause, isPlaying }] = useSound(soundtrack);
 
   const onStateChange = (event?: any, nextIndex?: number) => {
     if (nextIndex) {
@@ -41,25 +49,32 @@ export const App = () => {
   useEffect(() => {
     console.log(`index switched to ${index.current} `);
     console.log(`prev index: ${index.prev} `);
-  }, [index])
+  }, [index, isChecked, isPlaying])
+
+  const onSoundChange = (event?: any) => {
+    setIsChecked(!isChecked);
+    isChecked ? pause() : play();
+  }
 
   const onEnd = (event: any) => {
-    if (index.current === videos.length - 1) {
+    if (index.current === videos.length - 1) { // zero-based index
       onStateChange(event, 0);
       console.log('jump to start video');
-    } else if (index.current < (videos.length - 1 || videos.length)) {
+    } else if (index.current < videos.length - 1) {
       onStateChange(event, index.current + 1);
       console.log('next video');
     }
   }
 
   const handleKeyDown = (event: any) => {
+
     let nextIndex: number;
     switch (event.key) {
-      case 'delete':
+      case 'Delete':
+      case 'Backspace':
       case 'ArrowLeft':
 
-        nextIndex = index.current === 1 ? 0 : index.prev;
+        nextIndex = index.current <= 1 ? 0 : index.prev;
         onStateChange(event, nextIndex);
         break;
       case 'Enter':
@@ -73,18 +88,30 @@ export const App = () => {
         onStateChange(event, nextIndex);
         break;
     }
-  }
+  };
+
+  useEffect(() => {
+    window.addEventListener('onkeydown', handleKeyDown)
+  })
+
   return (
-    <Container fluid className="App" onKeyDown={handleKeyDown}>
-      <SoundToggle
-        play={play}
-        isPlaying={isPlaying}
-        isChecked={isChecked}
-        setIsChecked={setIsChecked}
-        pause={pause}
-      />
+    <Container fluid
+      className="App"
+      onKeyDown={(event: any) => handleKeyDown(event)}
+      tabIndex={0}
+    >
+      <Suspense fallback={<span>Loading Sound</span>}>
+        <SoundToggle
+          isChecked={isChecked}
+          isPlaying={isPlaying}
+          play={play}
+          pause={pause}
+          onChange={onSoundChange}
+        />
+      </Suspense>
       <Suspense fallback={<Loading />}>
         <Wallpaper
+          onReady={onSoundChange}
           className="videoWrapper"
           isChecked={isChecked}
           isPlaying={isPlaying}

@@ -1,5 +1,5 @@
 import './App.css';
-import { Suspense, lazy, useRef } from 'react';
+import { Suspense, lazy } from 'react';
 import React, { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import useSound from 'use-sound';
@@ -25,7 +25,7 @@ const SoundToggle = lazy(() =>
 export const App = () => {
 
   // toggle sound on
-  let [isChecked, setIsChecked] = useState<boolean>(true);
+  let [isChecked, setIsChecked] = useState<boolean>(false);
 
   const [index, setIndex] = useState<IndexState>({
     prev: 0,

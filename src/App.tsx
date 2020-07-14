@@ -5,7 +5,7 @@ import { Container } from 'react-bootstrap';
 import useSound from 'use-sound';
 import { videos } from './assets/videos';
 import { IndexState } from './types';
-import { Loading } from './components/loading';
+import { Loading } from './components/Loading';
 
 const soundtrack = require('./assets/sadeness.mp3');
 
@@ -25,19 +25,25 @@ const SoundToggle = lazy(() =>
 export const App = () => {
 
   // toggle sound on
-  let [isChecked, setIsChecked] = useState<boolean>(false);
+  let [isChecked, setIsChecked] = useState<boolean>(true);
 
   const [index, setIndex] = useState<IndexState>({
     prev: 0,
     current: 0
   } as IndexState);
 
+
   let [play, { pause, isPlaying }] = useSound(soundtrack);
+
+  const onPlayerReady = () => {
+    setIsChecked(true);
+    play();
+  }
 
   const onStateChange = (event?: any, nextIndex?: number) => {
     if (nextIndex) {
       let nextPrev: number;
-      if (nextIndex === (0 || 1)) {
+      if (nextIndex <= 1) {
         nextPrev = 0;
       } else {
         nextPrev = nextIndex - 1
@@ -45,24 +51,19 @@ export const App = () => {
       setIndex({ prev: nextPrev, current: nextIndex });
     }
   }
-
   useEffect(() => {
-    console.log(`index switched to ${index.current} `);
-    console.log(`prev index: ${index.prev} `);
-  }, [index, isChecked, isPlaying])
+  }, [index, isChecked])
 
   const onSoundChange = (event?: any) => {
     setIsChecked(!isChecked);
     isChecked ? pause() : play();
-  }
+  };
 
   const onEnd = (event: any) => {
-    if (index.current === videos.length - 1) { // zero-based index
-      onStateChange(event, 0);
-      console.log('jump to start video');
-    } else if (index.current < videos.length - 1) {
+    if (index.current < videos.length) {
       onStateChange(event, index.current + 1);
-      console.log('next video');
+    } else if (index.current === videos.length) { // zero-based index
+      onStateChange(event, 0);
     }
   }
 
@@ -89,18 +90,17 @@ export const App = () => {
         break;
     }
   };
-
   useEffect(() => {
-    window.addEventListener('onkeydown', handleKeyDown)
+    window.addEventListener('touchstart', handleKeyDown, { capture: true, passive: true });
+    return window.removeEventListener('touchstart', handleKeyDown);
   })
-
   return (
     <Container fluid
       className="App"
-      onKeyDown={(event: any) => handleKeyDown(event)}
+      onKeyDown={handleKeyDown}
       tabIndex={0}
     >
-      <Suspense fallback={<span>Loading Sound</span>}>
+      <Suspense fallback={<Loading />}>
         <SoundToggle
           isChecked={isChecked}
           isPlaying={isPlaying}
@@ -117,6 +117,7 @@ export const App = () => {
           isPlaying={isPlaying}
           onEnd={onEnd}
           index={index}
+          onPlayerReady={onPlayerReady}
           onStateChange={onStateChange}
         />
       </Suspense>

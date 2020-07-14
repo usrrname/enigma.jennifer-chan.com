@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import YouTube, { YouTubeProps, Options, PlayerVars } from 'react-youtube';
-import { ResponsiveEmbed } from 'react-bootstrap';
+import { ResponsiveEmbed, Spinner, Container, Row, Col } from 'react-bootstrap';
 import { Video, IndexState } from '../types';
 import { getVideo } from '../util';
 import { videos } from '../assets/videos';
@@ -9,9 +9,12 @@ type Props = YouTubeProps & {
   isPlaying: boolean;
   isChecked: boolean;
   index: IndexState;
+  onEnd: (event: any) => void;
+  onPlayerReady: () => void;
 }
 
 interface State {
+  isLoading: boolean;
   player: any;
 }
 
@@ -20,9 +23,10 @@ export class Wallpaper extends Component<Props, State> {
     super(props);
     this.state = {
       player: null,
+      isLoading: true
     } as State
   }
-
+  keyImage = require('../assets/keys.png');
   video: Video | undefined;
   opts = {
     playerVars: {
@@ -43,7 +47,7 @@ export class Wallpaper extends Component<Props, State> {
   } as Options;
 
   componentDidMount() {
-    this.onReady();
+    this.props.onPlayerReady();
   }
 
   componentDidCatch() {
@@ -53,17 +57,19 @@ export class Wallpaper extends Component<Props, State> {
   componentDidUpdate(nextProps: Props) {
     if (nextProps.index !== this.props.index) {
       this.updateOpts(nextProps, this.props);
-    }
-    if ((!nextProps.isChecked && this.props.isChecked)
-      && (!nextProps.isPlaying && this.props.isPlaying) && this.video?.autoplay === 1) {
       this.state.player.playVideo();
     }
-    if (nextProps.isChecked && !this.props.isChecked) {
+    if ((!nextProps.isChecked && this.props.isChecked)
+      || this.video?.autoplay === 1) {
+      this.state.player.playVideo();
+    }
+    if ((nextProps.isChecked && !this.props.isChecked) || (nextProps.isPlaying && !this.props.isPlaying)) {
       this.state.player.pauseVideo();
     }
   }
 
-  updateOpts(props: Props, nextProps?: Props,) {
+  updateOpts(props: Props, nextProps?: Props) {
+    this.video = getVideo(props.index.current, videos);
     if (props && !nextProps) {
       this.opts = {
         playerVars: {
@@ -109,44 +115,57 @@ export class Wallpaper extends Component<Props, State> {
   }
 
   onReady = (event?: any) => {
-    this.video = getVideo(this.props.index.current, videos);
-    this.updateOpts(this.props);
-
     this.setState({
-      player: event?.target
+      player: event?.target,
+      isLoading: false
     })
+    this.updateOpts(this.props);
   }
 
   onError = (event?: any) => {
     console.warn(event.data)
+    setTimeout(() => this.props?.onEnd(event));
   }
 
   onPlay = (event: any) => {
     if (this.props.isChecked && this.props.isPlaying) {
-      event.target.playVideo();
+      event?.target.playVideo();
     }
   }
 
   onPause = (event: any) => {
     if (!this.props.isChecked || !this.props.isPlaying) {
-      event.target.pauseVideo();
+      event?.target.pauseVideo();
     }
   }
 
   render() {
     return (
-      <ResponsiveEmbed aspectRatio='16by9' bsPrefix="embed-responsive">
-        <YouTube
-          videoId={this.video?.id}
-          opts={this.opts}
-          onReady={this.onReady}
-          onEnd={this.props.onEnd}
-          onError={this.onError}
-          onPlay={this.onPlay}
-          onPause={this.onPause}
-          onStateChange={this.props.onStateChange}
-        />
-      </ResponsiveEmbed>
+      <>
+        {this.state.isLoading &&
+          <Container className="spinner">
+            <Row>
+              <Col xs={12} md={8}>
+                <Spinner animation="border" />
+                <p>Toggle back and forth</p>
+                <img src={this.keyImage} alt="Toggle back and forth with left and right keys" />
+              </Col>
+            </Row>
+          </Container>
+        }
+        <ResponsiveEmbed aspectRatio='16by9'>
+          <YouTube
+            videoId={this.video?.id}
+            opts={this.opts}
+            onReady={this.onReady}
+            onEnd={this.props.onEnd}
+            onError={this.onError}
+            onPlay={this.onPlay}
+            onPause={this.onPause}
+            onStateChange={this.props.onStateChange}
+          />
+        </ResponsiveEmbed>
+      </>
     )
   }
 }

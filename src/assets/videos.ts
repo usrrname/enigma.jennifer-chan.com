@@ -4,15 +4,15 @@ export const videos = [
   {
     id: 'TPChnsfBFuw',
     name: 'Drone footage of the baby whale beached at Amanzimtoti\'s Pipeline beach',
-    start: 6,
-    end: 12,
+    start: 0,
+    end: 4,
     autoplay: 1,
   },
   {
     id: 'TPChnsfBFuw',
     name: 'Drone footage of the baby whale beached at Amanzimtoti\'s Pipeline beach',
-    start: 30,
-    end: 40,
+    start: 7,
+    end: 50,
     autoplay: 1,
   },
   {
@@ -51,13 +51,6 @@ export const videos = [
     autoplay: 1
   },
   {
-    id: '5mTiFRNMRO0',
-    name: '沙煲即食麵(要過熱河)將炸麵油除去。',
-    start: 28,
-    end: 40,
-    autoplay: 1
-  },
-  {
     id: 'uamdraznYsU',
     name: '餐蛋麵 Hong Kong Style Luncheon Meat & Egg Noodle',
     start: 0,
@@ -72,13 +65,6 @@ export const videos = [
     autoplay: 1
   },
   {
-    id: 'uamdraznYsU',
-    name: '餐蛋麵 Hong Kong Style Luncheon Meat & Egg Noodle',
-    start: 818,
-    end: 822,
-    autoplay: 1
-  },
-  {
     id: 'SNDGCiY0z5I',
     name: 'Plane washes ashore after crashing into Atlantic Ocean',
     start: 0,
@@ -86,17 +72,10 @@ export const videos = [
     autoplay: 1
   },
   {
-    id: 'XJ8i896xM',
+    id: 't-XJ8i896xM',
     name: 'UK minister criticised over posture during Brexit debate',
     start: 0,
     end: 5,
-    autoplay: 1
-  },
-  {
-    id: 'HLVGHqc4uAA',
-    name: 'MPs spark chaos in Parliament in prorogation protest',
-    start: 389,
-    end: 1047,
     autoplay: 1
   },
   {
@@ -158,7 +137,7 @@ export const videos = [
   {
     id: 'aKmLxoMScb4',
     name: 'Brexit - British MP seizes mace, tossed from parliament',
-    start: 4,
+    start: 5,
     end: 19,
     autoplay: 1
   },

@@ -50,3 +50,7 @@ Wallpaper.videoWrapper iframe,
 	left: 0;
 	margin: 0;
 }
+
+.spinner {
+	z-index: 2;
+}

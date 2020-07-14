@@ -52,7 +52,7 @@ export const App = () => {
     }
   }
   useEffect(() => {
-  }, [index, isChecked])
+  }, [index])
 
   const onSoundChange = (event?: any) => {
     setIsChecked(!isChecked);
@@ -91,16 +91,15 @@ export const App = () => {
     }
   };
   useEffect(() => {
-    window.addEventListener('touchstart', handleKeyDown, { capture: true, passive: true });
-    return window.removeEventListener('touchstart', handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown, { capture: true, passive: true });
+    return window.removeEventListener('keydown', handleKeyDown);
   })
   return (
     <Container fluid
       className="App"
       onKeyDown={handleKeyDown}
-      tabIndex={0}
     >
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<p>Loading...</p>}>
         <SoundToggle
           isChecked={isChecked}
           isPlaying={isPlaying}

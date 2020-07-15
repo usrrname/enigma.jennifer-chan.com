@@ -51,6 +51,7 @@ export const App = () => {
       setIndex({ prev: nextPrev, current: nextIndex });
     }
   }
+
   useEffect(() => {
   }, [index])
 
@@ -60,7 +61,7 @@ export const App = () => {
   };
 
   const onEnd = (event: any) => {
-    if (index.current < videos.length) {
+    if (index.current < videos.length - 1) {
       onStateChange(event, index.current + 1);
     } else if (index.current === videos.length - 1) { // zero-based index
       onStateChange(event, 0);
@@ -90,7 +91,7 @@ export const App = () => {
         break;
     }
   };
-  
+
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown, { capture: true, passive: true });
     return window.removeEventListener('keydown', handleKeyDown);

@@ -24,8 +24,24 @@ export class Wallpaper extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      opts: {},
-      video: null,
+      video: getVideo(props.index.current, videos),
+      opts: {
+        playerVars: {
+          controls: 0,
+          color: 'red',
+          playsinline: 1,
+          enablejsapi: 1,
+          iv_load_policy: 3,
+          mute: 1,
+          fs: 0,
+          disablekb: 1,
+          modestbranding: 1,
+          showinfo: 0,
+          autoplay: 1,
+          start: 6,
+          end: 20
+        }
+      },
       player: null,
       isLoading: false
     } as unknown as State
@@ -45,29 +61,24 @@ export class Wallpaper extends Component<Props, State> {
   componentDidUpdate(nextProps: Props) {
     if (nextProps.index !== this.props.index) {
       this.updateOpts(this.props, nextProps);
-      this.state.player.playVideo();
     }
+
     if (!nextProps.isChecked && this.props.isChecked) {
       this.state.player.playVideo();
     }
+
     if ((nextProps.isChecked && !this.props.isChecked) || (nextProps.isPlaying && !this.props.isPlaying)) {
       this.state.player.pauseVideo();
     }
   }
 
   updateOpts(props: Props, nextProps?: Props) {
-    let assignedVideo;
-    if (props.index && !nextProps) {
-      const initialVideo = getVideo(props.index.current, videos);
-      assignedVideo = initialVideo;
-    } else if (nextProps && (nextProps.index.current !== props.index.current)) {
-      const nextVideo = getVideo(nextProps.index.current, videos);
-      assignedVideo = nextVideo;
-    }
 
-    if (assignedVideo) {
+    if (props && nextProps && (nextProps.index.current !== props.index.current)) {
+      const nextVideo = getVideo(nextProps.index.current, videos);
+
       this.setState({
-        video: assignedVideo,
+        video: nextVideo,
         opts: {
           playerVars: {
             controls: 0,
@@ -81,24 +92,21 @@ export class Wallpaper extends Component<Props, State> {
             modestbranding: 1,
             showinfo: 0,
             autoplay: 1,
-            start: assignedVideo.start,
-            end: assignedVideo.end
+            start: nextVideo.start,
+            end: nextVideo.end
           } as PlayerVars,
         } as Options
       });
     }
   }
 
-
   onReady = (event?: any) => {
-    this.props.onPlayerReady();
-
     this.setState({
       player: event?.target,
       isLoading: false
-    })
-    this.updateOpts(this.props);
-    this.state.player.playVideo();
+    });
+
+    this.props.onPlayerReady();
   }
 
   onError = (event?: any) => {

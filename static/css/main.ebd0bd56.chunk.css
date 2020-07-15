@@ -1,0 +1,2 @@
+#root{height:100vh;width:100vw}body,html{width:100%;height:100%}.container-fluid{padding:0}div.App{opacity:.4;transition:opacity .5s}div.App:hover{opacity:1}.App{margin:0;padding:0;display:flex;height:inherit}.sound-toggle{background-color:hsla(0,0%,100%,.7);z-index:3;position:absolute;top:0;right:0}iframe{pointer-events:none;cursor:default}.videoWrapper>#widget2,Wallpaper.videoWrapper iframe{z-index:-5!important;position:absolute;padding:0;top:0;left:0;margin:0}.spinner{z-index:2}
+/*# sourceMappingURL=main.ebd0bd56.chunk.css.map */

@@ -18,8 +18,8 @@ export const videos = [
   {
     id: 'IZRruR6X220',
     name: 'Dead whale at beach in Everett at Harborview Park',
-    start: 78,
-    end: 94,
+    start: 80,
+    end: 88,
     autoplay: 1,
   },
   {
@@ -39,7 +39,7 @@ export const videos = [
   {
     id: 'jIl2DSXUffw',
     name: '(Original) Suicidal Snake eating itself',
-    start: 17,
+    start: 18,
     end: 23,
     autoplay: 1
   },
@@ -75,13 +75,13 @@ export const videos = [
     id: 't-XJ8i896xM',
     name: 'UK minister criticised over posture during Brexit debate',
     start: 0,
-    end: 5,
+    end: 4,
     autoplay: 1
   },
   {
     id: 'L9TnPiCVaLI',
     name: 'Tea Making in slow Motion - milk mixing beautiful video',
-    start: 5,
+    start: 7,
     end: 14,
     autoplay: 1
   },
@@ -117,14 +117,14 @@ export const videos = [
     id: '1xTG5pHSjYQ',
     name: 'Polar Vortex 2019, Canada, Ontario (-38C)',
     start: 24,
-    end: 48,
+    end: 40,
     autoplay: 1
   },
   {
     id: 'A8q-Zx8gIbg',
     name: 'Ukrainian politician thrown into a rubbish bin by angry mob - BBC News',
     start: 9,
-    end: 28,
+    end: 27,
     autoplay: 1
   },
   {
@@ -144,15 +144,15 @@ export const videos = [
   {
     id: 'aKmLxoMScb4',
     name: 'Brexit - British MP seizes mace, tossed from parliament',
-    start: 5,
-    end: 19,
+    start: 6,
+    end: 18,
     autoplay: 1
   },
   {
     id: 'XtPic_hf-Jo',
     name: 'The Rope [Slackline over Monster Waves in Nazaré] [Drone]',
-    start: 17,
-    end: 100,
+    start: 18,
+    end: 35,
     autoplay: 1
   },
 ] as Video[];

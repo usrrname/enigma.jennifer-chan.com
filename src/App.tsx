@@ -5,7 +5,7 @@ import { Container } from 'react-bootstrap';
 import useSound from 'use-sound';
 import { videos } from './assets/videos';
 import { IndexState } from './types';
-import { Loading } from './components/Loading';
+import { Loading } from './components/loading';
 
 const soundtrack = require('./assets/sadeness.mp3');
 
@@ -62,7 +62,7 @@ export const App = () => {
   const onEnd = (event: any) => {
     if (index.current < videos.length) {
       onStateChange(event, index.current + 1);
-    } else if (index.current === videos.length) { // zero-based index
+    } else if (index.current === videos.length - 1) { // zero-based index
       onStateChange(event, 0);
     }
   }
@@ -94,6 +94,7 @@ export const App = () => {
     window.addEventListener('keydown', handleKeyDown, { capture: true, passive: true });
     return window.removeEventListener('keydown', handleKeyDown);
   })
+
   return (
     <Container fluid
       className="App"

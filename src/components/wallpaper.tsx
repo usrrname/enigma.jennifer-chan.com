@@ -46,10 +46,6 @@ export class Wallpaper extends Component<Props, State> {
     }
   } as Options;
 
-  componentDidMount() {
-    this.props.onPlayerReady();
-  }
-
   componentDidCatch() {
     this.onError();
   }
@@ -115,16 +111,26 @@ export class Wallpaper extends Component<Props, State> {
   }
 
   onReady = (event?: any) => {
+    this.props.onPlayerReady();
     this.setState({
       player: event?.target,
       isLoading: false
     })
     this.updateOpts(this.props);
+
   }
 
   onError = (event?: any) => {
     console.warn(event.data)
-    setTimeout(() => this.props?.onEnd(event));
+    this.setState({
+      isLoading: true
+    })
+    setTimeout(() => {
+      this.setState({
+        isLoading: false
+      })
+      this.props?.onEnd(event);
+    });
   }
 
   onPlay = (event: any) => {
@@ -143,12 +149,12 @@ export class Wallpaper extends Component<Props, State> {
     return (
       <>
         {this.state.isLoading &&
-          <Container className="spinner">
+          <Container className="spinner container-fluid" fluid>
             <Row>
-              <Col xs={12} md={8}>
+              <Col lg={{ span: 12, offset: 3 }} className="mt-5">
                 <Spinner animation="border" />
                 <p>Toggle back and forth</p>
-                <img src={this.keyImage} alt="Toggle back and forth with left and right keys" />
+                <img src={this.keyImage} alt="Toggle back and forth with left and right keys" width={100} />
               </Col>
             </Row>
           </Container>

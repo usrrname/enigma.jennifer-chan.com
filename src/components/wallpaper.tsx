@@ -16,35 +16,27 @@ type Props = YouTubeProps & {
 interface State {
   isLoading: boolean;
   player: any;
+  video: Video;
+  opts: Options;
 }
 
 export class Wallpaper extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      opts: {},
+      video: null,
       player: null,
-      isLoading: true
-    } as State
+      isLoading: false
+    } as unknown as State
   }
   keyImage = require('../assets/keys.png');
-  video: Video | undefined;
-  opts = {
-    playerVars: {
-      controls: 0,
-      color: 'red',
-      playsinline: 1,
-      enablejsapi: 1,
-      iv_load_policy: 3,
-      mute: 1,
-      fs: 0,
-      disablekb: 1,
-      modestbranding: 1,
-      showinfo: 0,
-      autoplay: this.video?.autoplay,
-      start: this.video?.start,
-      end: this.video?.end
-    }
-  } as Options;
+
+  componentDidMount() {
+    this.setState({
+      isLoading: true
+    })
+  }
 
   componentDidCatch() {
     this.onError();
@@ -52,11 +44,10 @@ export class Wallpaper extends Component<Props, State> {
 
   componentDidUpdate(nextProps: Props) {
     if (nextProps.index !== this.props.index) {
-      this.updateOpts(nextProps, this.props);
+      this.updateOpts(this.props, nextProps);
       this.state.player.playVideo();
     }
-    if ((!nextProps.isChecked && this.props.isChecked)
-      || this.video?.autoplay === 1) {
+    if (!nextProps.isChecked && this.props.isChecked) {
       this.state.player.playVideo();
     }
     if ((nextProps.isChecked && !this.props.isChecked) || (nextProps.isPlaying && !this.props.isPlaying)) {
@@ -65,63 +56,53 @@ export class Wallpaper extends Component<Props, State> {
   }
 
   updateOpts(props: Props, nextProps?: Props) {
-    this.video = getVideo(props.index.current, videos);
-    if (props && !nextProps) {
-      this.opts = {
-        playerVars: {
-          controls: 0,
-          color: 'red',
-          playsinline: 1,
-          enablejsapi: 1,
-          iv_load_policy: 3,
-          mute: 1,
-          fs: 0,
-          disablekb: 1,
-          modestbranding: 1,
-          showinfo: 0,
-          autoplay: this.video?.autoplay,
-          start: this.video?.start,
-          end: this.video?.end
-        } as PlayerVars,
-      } as Options;
-    } else {
-      if (nextProps && (nextProps.index !== props.index)) {
-        this.video = getVideo(nextProps.index.current, videos)
-        if (this.video && this.opts) {
-          this.opts = {
-            playerVars: {
-              controls: 0,
-              color: 'red',
-              playsinline: 1,
-              enablejsapi: 1,
-              iv_load_policy: 3,
-              mute: 1,
-              fs: 0,
-              disablekb: 1,
-              modestbranding: 1,
-              showinfo: 0,
-              autoplay: this.video?.autoplay,
-              start: this.video?.start,
-              end: this.video?.end
-            } as PlayerVars,
-          } as Options;
-        }
-      }
+    let assignedVideo;
+    if (props.index && !nextProps) {
+      const initialVideo = getVideo(props.index.current, videos);
+      assignedVideo = initialVideo;
+    } else if (nextProps && (nextProps.index.current !== props.index.current)) {
+      const nextVideo = getVideo(nextProps.index.current, videos);
+      assignedVideo = nextVideo;
+    }
+
+    if (assignedVideo) {
+      this.setState({
+        video: assignedVideo,
+        opts: {
+          playerVars: {
+            controls: 0,
+            color: 'red',
+            playsinline: 1,
+            enablejsapi: 1,
+            iv_load_policy: 3,
+            mute: 1,
+            fs: 0,
+            disablekb: 1,
+            modestbranding: 1,
+            showinfo: 0,
+            autoplay: 1,
+            start: assignedVideo.start,
+            end: assignedVideo.end
+          } as PlayerVars,
+        } as Options
+      });
     }
   }
 
+
   onReady = (event?: any) => {
     this.props.onPlayerReady();
+
     this.setState({
       player: event?.target,
       isLoading: false
     })
     this.updateOpts(this.props);
-
+    this.state.player.playVideo();
   }
 
   onError = (event?: any) => {
-    console.warn(event.data)
+    console.warn(event.data);
     this.setState({
       isLoading: true
     })
@@ -161,8 +142,8 @@ export class Wallpaper extends Component<Props, State> {
         }
         <ResponsiveEmbed aspectRatio='16by9'>
           <YouTube
-            videoId={this.video?.id}
-            opts={this.opts}
+            videoId={this.state.video?.id}
+            opts={this.state.opts}
             onReady={this.onReady}
             onEnd={this.props.onEnd}
             onError={this.onError}

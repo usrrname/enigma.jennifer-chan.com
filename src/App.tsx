@@ -90,6 +90,7 @@ export const App = () => {
         break;
     }
   };
+  
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown, { capture: true, passive: true });
     return window.removeEventListener('keydown', handleKeyDown);

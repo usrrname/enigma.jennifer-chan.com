@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/static/css/main.54fe3bb0.chunk.css",
-    "main.js": "/static/js/main.92a22585.chunk.js",
-    "main.js.map": "/static/js/main.92a22585.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.fe675103.js",
-    "runtime-main.js.map": "/static/js/runtime-main.fe675103.js.map",
+    "main.js": "/static/js/main.d0277b7d.chunk.js",
+    "main.js.map": "/static/js/main.d0277b7d.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.c82a10f3.js",
+    "runtime-main.js.map": "/static/js/runtime-main.c82a10f3.js.map",
     "static/js/2.7b23ac2c.chunk.js": "/static/js/2.7b23ac2c.chunk.js",
     "static/js/2.7b23ac2c.chunk.js.map": "/static/js/2.7b23ac2c.chunk.js.map",
     "static/css/3.829c9cb5.chunk.css": "/static/css/3.829c9cb5.chunk.css",
     "static/js/3.ace65ba7.chunk.js": "/static/js/3.ace65ba7.chunk.js",
     "static/js/3.ace65ba7.chunk.js.map": "/static/js/3.ace65ba7.chunk.js.map",
-    "static/js/4.e0c3116a.chunk.js": "/static/js/4.e0c3116a.chunk.js",
-    "static/js/4.e0c3116a.chunk.js.map": "/static/js/4.e0c3116a.chunk.js.map",
+    "static/js/4.6638fcbb.chunk.js": "/static/js/4.6638fcbb.chunk.js",
+    "static/js/4.6638fcbb.chunk.js.map": "/static/js/4.6638fcbb.chunk.js.map",
     "static/js/5.2e90e5d9.chunk.js": "/static/js/5.2e90e5d9.chunk.js",
     "static/js/5.2e90e5d9.chunk.js.map": "/static/js/5.2e90e5d9.chunk.js.map",
     "static/js/6.f1a3724d.chunk.js": "/static/js/6.f1a3724d.chunk.js",
     "static/js/6.f1a3724d.chunk.js.map": "/static/js/6.f1a3724d.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.a7dbfbe3ef98661eee86d5a24e0db6e2.js": "/precache-manifest.a7dbfbe3ef98661eee86d5a24e0db6e2.js",
+    "precache-manifest.5d3f60bf9a1362e8a3df3fde2ade219b.js": "/precache-manifest.5d3f60bf9a1362e8a3df3fde2ade219b.js",
     "service-worker.js": "/service-worker.js",
     "static/css/3.829c9cb5.chunk.css.map": "/static/css/3.829c9cb5.chunk.css.map",
     "static/css/main.54fe3bb0.chunk.css.map": "/static/css/main.54fe3bb0.chunk.css.map",
@@ -27,10 +27,10 @@
     "static/media/sadeness.mp3": "/static/media/sadeness.5dcc518e.mp3"
   },
   "entrypoints": [
-    "static/js/runtime-main.fe675103.js",
+    "static/js/runtime-main.c82a10f3.js",
     "static/css/3.829c9cb5.chunk.css",
     "static/js/3.ace65ba7.chunk.js",
     "static/css/main.54fe3bb0.chunk.css",
-    "static/js/main.92a22585.chunk.js"
+    "static/js/main.d0277b7d.chunk.js"
   ]
 }

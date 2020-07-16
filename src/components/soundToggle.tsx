@@ -18,10 +18,9 @@ export const SoundToggle = (props: Props) => {
 
   }, [props.isPlaying, props.isChecked])
   return (
-    <div className="sound-toggle">
+    <span className="sound-toggle">
       {props.isChecked && props.isPlaying ? <label className="ml-2 mr-2">Sound On</label> : <label>Sound Off</label>}
       <ToggleButton
-        name="toggle-sound"
         active={props.isPlaying}
         checked={props.isChecked}
         type="checkbox"
@@ -29,6 +28,6 @@ export const SoundToggle = (props: Props) => {
         value=''
         onChange={props.onChange}
       />
-    </div >
+    </span>
   );
 }

@@ -87,12 +87,7 @@ export const App = () => {
         break;
       case 'Enter':
       case 'ArrowRight':
-
-        if (index.current < videos.length) {
-          nextIndex = index.current + 1
-        } else {
-          nextIndex = 0;
-        }
+        nextIndex = index.current < videos.length ? index.current + 1 : 0;
         onStateChange(event, nextIndex);
         break;
     }
@@ -115,7 +110,7 @@ export const App = () => {
       <Container fluid className="App container-fluid">
         <Row className="nav-row">
           <Col lg={2} md={6} xs={12}>
-            <Button onClick={handleShow}>About</Button>
+            <Button variant="light" onClick={handleShow}>?</Button>
           </Col>
           <Col lg={2} md={6} xs={12}>
             <Suspense fallback={<p>Loading...</p>}>

@@ -86,7 +86,7 @@ export class Wallpaper extends Component<Props, State> {
             playsinline: 1,
             enablejsapi: 1,
             iv_load_policy: 3,
-            mute: nextVideo.mute ? nextVideo.mute : 1,
+            mute: 1,
             fs: 0,
             disablekb: 1,
             modestbranding: 1,

@@ -1,11 +1,12 @@
 import './App.css';
 import { Suspense, lazy } from 'react';
 import React, { useState, useEffect } from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Col, Button, Row } from 'react-bootstrap';
 import useSound from 'use-sound';
 import { videos } from './assets/videos';
 import { IndexState } from './types';
 import { Loading } from './components/loading';
+import { About } from './components/About';
 
 const soundtrack = require('./assets/sadeness.mp3');
 
@@ -27,6 +28,7 @@ export const App = () => {
   // toggle sound on
   let [isChecked, setIsChecked] = useState<boolean>(true);
 
+  // set videos array index
   const [index, setIndex] = useState<IndexState>({
     prev: 0,
     current: 0
@@ -35,6 +37,7 @@ export const App = () => {
 
   let [play, { pause, isPlaying }] = useSound(soundtrack);
 
+  // when the wallpaper component has loaded, play soundtrack
   const onPlayerReady = () => {
     setIsChecked(true);
     play();
@@ -79,7 +82,7 @@ export const App = () => {
       case 'Backspace':
       case 'ArrowLeft':
 
-        nextIndex = index.current === 1 ? 0 : index.current - 1;
+        nextIndex = index.current <= 1 ? 0 : index.current - 1;
         onStateChange(event, nextIndex);
         break;
       case 'Enter':
@@ -100,32 +103,47 @@ export const App = () => {
     return window.removeEventListener('keydown', handleKeyDown);
   })
 
+  // Modal state
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
+
   return (
-    <Container fluid
-      className="App"
-      onKeyDown={handleKeyDown}
-    >
-      <Suspense fallback={<p>Loading...</p>}>
-        <SoundToggle
-          isChecked={isChecked}
-          isPlaying={isPlaying}
-          play={play}
-          pause={pause}
-          onChange={onSoundChange}
-        />
-      </Suspense>
-      <Suspense fallback={<Loading />}>
-        <Wallpaper
-          onReady={onSoundChange}
-          className="videoWrapper"
-          isChecked={isChecked}
-          isPlaying={isPlaying}
-          onEnd={onEnd}
-          index={index}
-          onPlayerReady={onPlayerReady}
-          onStateChange={onStateChange}
-        />
-      </Suspense>
-    </Container>
+    <>
+      <Container fluid className="App container-fluid">
+        <Row className="nav-row">
+          <Col lg={2} md={6} xs={12}>
+            <Button onClick={handleShow}>About</Button>
+          </Col>
+          <Col lg={2} md={6} xs={12}>
+            <Suspense fallback={<p>Loading...</p>}>
+              <SoundToggle
+                isChecked={isChecked}
+                isPlaying={isPlaying}
+                play={play}
+                pause={pause}
+                onChange={onSoundChange}
+              />
+            </Suspense>
+          </Col>
+        </Row>
+        <About show={show} handleShow={handleShow} handleClose={handleClose}></About>
+        <Suspense fallback={<Loading />}>
+          <Wallpaper
+            onReady={onSoundChange}
+            className="videoWrapper"
+            isChecked={isChecked}
+            isPlaying={isPlaying}
+            onEnd={onEnd}
+            index={index}
+            onPlayerReady={onPlayerReady}
+            onStateChange={onStateChange}
+          />
+        </Suspense>
+
+      </Container>
+    </>
   );
 };

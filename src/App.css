@@ -28,13 +28,19 @@ div.App:hover {
 	display: flex;
 	height: inherit;
 }
-
-.sound-toggle {
-	background-color: rgba(255, 255, 255, 0.7);
+.nav-row {
+	width: inherit;
 	z-index: 3;
 	position: absolute;
+	flex-basis: row wrap;
+	justify-content: space-between;
+}
+.sound-toggle {
+	position: absolute;
+	justify-self: flex-end;
 	top: 0;
 	right: 0;
+	background-color: rgba(255, 255, 255, 0.7);
 }
 
 iframe {

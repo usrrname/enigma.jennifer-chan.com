@@ -42,8 +42,7 @@ export const videos = [
     id: 'uamdraznYsU',
     name: '餐蛋麵 Hong Kong Style Luncheon Meat & Egg Noodle',
     start: 0,
-    end: 7,
-    mute: 0,
+    end: 7
   },
   {
     id: '5mTiFRNMRO0',
@@ -97,8 +96,7 @@ export const videos = [
     id: '1xTG5pHSjYQ',
     name: 'Polar Vortex 2019, Canada, Ontario (-38C)',
     start: 24,
-    end: 40,
-    mute: 0,
+    end: 40
   },
   {
     id: 'A8q-Zx8gIbg',
@@ -134,7 +132,6 @@ export const videos = [
     id: 'zQVXFpDb5zM',
     name: 'Will it Flush? - Ramen Noodles 4k',
     start: 36,
-    end: 52,
-    mute: 0
+    end: 52
   }
 ] as Video[];

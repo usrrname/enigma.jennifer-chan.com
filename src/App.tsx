@@ -43,7 +43,10 @@ export const App = () => {
   const onStateChange = (event?: any, nextIndex?: number) => {
     if (nextIndex) {
       let nextPrev: number;
-      if (nextIndex <= 1) {
+      if (nextIndex === 0) {
+        nextIndex = 0
+      }
+      if (nextIndex < 1) {
         nextPrev = 0;
       } else {
         nextPrev = nextIndex - 1
@@ -61,9 +64,9 @@ export const App = () => {
   };
 
   const onEnd = (event: any) => {
-    if (index.current < videos.length - 1) {
+    if (index.current < videos.length) {
       onStateChange(event, index.current + 1);
-    } else if (index.current === videos.length - 1) { // zero-based index
+    } else if (index.current === videos.length) { // zero-based index
       onStateChange(event, 0);
     }
   }
@@ -76,13 +79,13 @@ export const App = () => {
       case 'Backspace':
       case 'ArrowLeft':
 
-        nextIndex = index.current <= 1 ? 0 : index.prev;
+        nextIndex = index.current === 1 ? 0 : index.current - 1;
         onStateChange(event, nextIndex);
         break;
       case 'Enter':
       case 'ArrowRight':
 
-        if (index.current < videos.length - 1) {
+        if (index.current < videos.length) {
           nextIndex = index.current + 1
         } else {
           nextIndex = 0;

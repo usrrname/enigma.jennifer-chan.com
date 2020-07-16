@@ -3,6 +3,7 @@ export type Video = {
   name: string;
   start?: number;
   end?: number;
+  mute?: number;
 }
 
 export type IndexState = {

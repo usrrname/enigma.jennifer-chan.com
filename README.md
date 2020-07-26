@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), [use-sound](https://github.com/joshwcomeau/use-sound) hook by Josh Comeau and [react-youtube](https://github.com/tjallingt/react-youtube).
 
 ## Available Scripts
 
